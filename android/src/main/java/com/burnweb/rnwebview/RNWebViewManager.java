@@ -181,6 +181,50 @@ public class RNWebViewManager extends SimpleViewManager<RNWebView> {
         view.setInjectedJavaScript(injectedJavaScript);
     }
 
+    /***
+     * 控制Webview的device-width，依据公式：device-width=设备的物理分辨率/(devicePixelRatio * scale)
+     * @param view
+     * @param initScale
+     */
+    @ReactProp(name = "initScale")
+    public void setInitScale(RNWebView view, @Nullable Integer initScale) {
+        //Log.e("error","set init scale start ---------------"+String.valueOf(initScale));
+        view.setInitialScale(initScale);
+    }
+
+    /**
+     * LayoutAlgorithm是一个枚举用来控制页面的布局，有三个类型：
+     * NARROW_COLUMNS：可能的话使所有列的宽度不超过屏幕宽度
+     * NORMAL：正常显示不做任何渲染
+     * SINGLE_COLUMN：把所有内容放大webview等宽的一列中
+     * 目前仅控制是否开启SINGLE_COLUMN
+     * @param view
+     * @param layoutSingleColumnEnabled
+     */
+    @ReactProp(name = "layoutSingleColumnEnabled")
+    public void setLayoutSingleColumnEnabled (RNWebView view,boolean layoutSingleColumnEnabled)
+    {
+        //Log.e("error","set Layout Algorithm start ---------------");
+        if(layoutSingleColumnEnabled){
+            view.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        }
+    }
+
+    /**
+     * 当使用WebView来显示页面时，该默认不启用宽视图模式(这样页面会充分的放大，不会适配屏幕)
+     * 使用setUseWideViewPort来启用宽视图模式
+     * @param view
+     * @param useWiedViewPortEnabled
+     */
+    @ReactProp(name = "useWiedViewPortEnabled")
+    public void setUseWideViewPortEnabled (RNWebView view,boolean useWiedViewPortEnabled)
+    {
+        //Log.e("error","set Layout Algorithm start ---------------");
+        if(useWiedViewPortEnabled){
+            view.getSettings().setUseWideViewPort(true);
+        }
+    }
+
     @Override
     public @Nullable
     Map<String, Integer> getCommandsMap() {
